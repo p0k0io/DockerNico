@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  web:
+    image: p0k0io/dockernicoejercicio
+    container_name: php_app
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/empresa.sql:/docker-entrypoint-initdb.d/empresa.sql
+
+volumes:
+  db_data:
